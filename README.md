@@ -1,6 +1,6 @@
 # Godot Ocean Shaders
 
-This repository is a collection of ocean shaders for the godot 4.3 game engine.
+This repository is a collection of ocean shaders for the [godot 4.3 game engine](https://godotengine.org/).
 
 Currently the repository includes the following shaders.
 
