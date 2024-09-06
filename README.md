@@ -14,3 +14,4 @@ Currently the repository includes the following shaders.
 * The shader is located in gerstner_wave.gdshader. 
 
 
+![recording](https://github.com/user-attachments/assets/248fbf60-8769-4596-ae1c-00a328cdbd9e)
