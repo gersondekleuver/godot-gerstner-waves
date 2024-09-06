@@ -18,8 +18,8 @@ Currently the repository includes the following shaders.
 * This shader is a simple godot implimentation of the Gerstner waves from the great [catlikecoding](https://catlikecoding.com/unity/tutorials/flow/waves/).
 
 #### TODO
-Precalculate the gerstner waves to significantly increase performance.
-Add readback for buoyancy
+* Precalculate the gerstner waves to significantly increase performance.
+* Add readback for buoyancy.
 
 ### WIP Realistic waves - JONSWAP
 
