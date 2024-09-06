@@ -1,0 +1,20 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Godot ocean shader collection 4.3"
+run/main_scene="res://stylized_wave/stylized_wave_scene.tscn"
+config/features=PackedStringArray("4.3", "Forward Plus")
+config/icon="res://icon.svg"
+
+[editor]
+
+movie_writer/movie_file="C:/Users/kleuv/Documents/godot_games/godot-ocean-shader-collection-4.3/recording.avi"
