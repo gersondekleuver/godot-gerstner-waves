@@ -16,3 +16,6 @@ Currently the repository includes the following shaders.
 * Parameters allow for alternation in wave smoothness, speed, height, and other aspects.
 * This shader is a simple godot implimentation of the Gerstner waves from the great [catlikecoding](https://catlikecoding.com/unity/tutorials/flow/waves/).
 
+### WIP Realistic waves - JONSWAP
+
+### WIP Realistic waves - fluid dynamics
