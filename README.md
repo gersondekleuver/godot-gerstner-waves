@@ -13,8 +13,4 @@ Currently the repository includes the following shaders.
 * Allows for stacking a few waves which allow for height calculation in real-time (computationally ineffective).
 * Parameters allow for alternation in wave smoothness, speed, height, and other aspects.
 * This shader is a simple godot implimentation of the Gerstner waves from the great [catlikecoding](https://catlikecoding.com/unity/tutorials/flow/waves/).
-* The shader is located in gerstner_wave.gdshader.
-- visible tiling 
-
-
 
