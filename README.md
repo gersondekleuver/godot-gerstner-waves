@@ -19,6 +19,7 @@ Currently the repository includes the following shaders.
 
 #### TODO
 Precalculate the gerstner waves to significantly increase performance.
+Add readback for buoyancy
 
 ### WIP Realistic waves - JONSWAP
 
