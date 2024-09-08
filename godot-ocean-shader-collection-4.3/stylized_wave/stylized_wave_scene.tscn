@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://bbbetw7otxcbu"]
 
-[ext_resource type="Shader" path="res://stylized_wave/visual_shaders/unoptimized_gerstner_water.gdshader" id="1_tsmva"]
+[ext_resource type="Shader" path="res://stylized_wave/visual_shaders/unoptimized_gerstner_wave.gdshader" id="1_tsmva"]
 [ext_resource type="Shader" path="res://stylized_wave/visual_shaders/sky.gdshader" id="2_g7crs"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_h12fj"]
@@ -38,7 +38,7 @@ shader_parameter/albedo = Color(0.156863, 0.168627, 1, 1)
 shader_parameter/roughness = 0.0
 shader_parameter/metallic = 0.2
 shader_parameter/albedo_fresnel = Color(1, 1, 1, 1)
-shader_parameter/aldedo_foam = Color(0.956593, 0.955957, 1, 1)
+shader_parameter/albedo_foam = null
 shader_parameter/texture_noise_speed_1 = 4.0
 shader_parameter/texture_noise_speed_2 = 4.0
 shader_parameter/texture_dir_1 = Vector2(0, 2)
@@ -59,8 +59,8 @@ shader_parameter/height_map = SubResource("NoiseTexture2D_yldqg")
 [sub_resource type="QuadMesh" id="QuadMesh_ialnf"]
 lightmap_size_hint = Vector2i(102, 102)
 size = Vector2(20, 20)
-subdivide_width = 1000
-subdivide_depth = 1000
+subdivide_width = 1500
+subdivide_depth = 1500
 orientation = 1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_flvxc"]
