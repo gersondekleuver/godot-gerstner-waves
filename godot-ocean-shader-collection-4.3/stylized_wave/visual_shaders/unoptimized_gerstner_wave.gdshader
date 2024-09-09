@@ -19,7 +19,7 @@ uniform vec2 normal_texture_dir_2 = vec2(0.2, 0.2);
 
 // Height noise variable
 uniform sampler2D height_map;
-uniform float amplitude_height_noise : hint_range(0.0, 10.0, 0.1) = 0.7;
+uniform float height_noise_amplitude : hint_range(0.0, 10.0, 0.1) = 0.7;
 uniform float height_noise_smoothness : hint_range(0.0, 300.0, 1.0) = 15.0;
 uniform float height_noise_speed : hint_range(0.0, 0.25, 0.005) = 0.025;
 
@@ -39,17 +39,16 @@ varying float height;
 varying vec3 world_pos;
 
 float get_noise_height(vec2 pos, float y){
-	float wave = texture(height_map, pos / height_noise_smoothness + TIME * height_noise_speed).r;
-	return max(wave * amplitude_height_noise * y, wave / 3.0);
+	float wave = texture(height_map, pos / height_noise_smoothness + height_noise_speed * TIME).r;
+	return max(wave * height_noise_amplitude * y, wave / 3.0);
 }
 
 vec3 gerstner_wave(vec4 wave,vec3 pos, inout vec3 tangent, inout vec3 binormal){
 	float wave_length = wave.w;
 	float s = wave.z;
 	float k = 2.0 * pi / wave_length;
-	float c = sqrt(9.8 / k);
 	vec2 d = normalize(wave.xy);
-	float f = k * (dot(d,pos.xz) - c * TIME);
+	float f = k * (dot(d,pos.xz) - sqrt(9.8 / k) * TIME);
 	float a = s / k;
 
 	float sin_f = sin(f);
@@ -76,26 +75,33 @@ void vertex() {
 
 	vec3 tangent = vec3(1, 0, 0);
 	vec3 binormal = vec3(0, 0, 1);
-	vec2 e = vec2(0.5, 0.0);
-
+	
 	vec3 p = gerstner_wave(wave_1, world_pos, tangent, binormal)
 		+ gerstner_wave(wave_2, world_pos, tangent, binormal)
 		+ gerstner_wave(wave_3, world_pos, tangent, binormal)
 		+ gerstner_wave(wave_4, world_pos, tangent, binormal)
 		+ gerstner_wave(wave_5, world_pos, tangent, binormal);
 
-	height = p.x;
-
-	VERTEX.y = height + get_noise_height(world_pos.xz, height);
-	VERTEX.x += p.y;
+	VERTEX.y = p.x + get_noise_height(world_pos.xz, p.x);
+	VERTEX.x += p.y; 
 	VERTEX.z += p.z;
-	NORMAL = normalize(cross(binormal, tangent)) + normalize(vec3(
+	
+	// store height in presistent variable.
+	height = VERTEX.y;
+	
+	// Adding central difference for recalculating noise normals.
+	vec2 e = vec2(0.1, 0.0);
+	NORMAL = normalize(vec3(
 		get_noise_height(world_pos.xz - e , height)
 		- get_noise_height(world_pos.xz + e , height),
 		2.0 * e.x,
 		get_noise_height(world_pos.xz - e.yx , height)
 		- get_noise_height(world_pos.xz + e.yx , height)
 		));
+		
+	// Used to calculate normals for gerstner waves 
+	// Added this to decrease the harshness of the texture.
+	NORMAL += normalize(cross(binormal, tangent));
 
 }
 
@@ -109,16 +115,16 @@ float fresnel(float f, vec3 normal, vec3 view)
 void fragment() {
 	vec2 time_1 = TIME * normal_texture_dir_1 * normal_texture_speed_1;
 	vec2 time_2 = TIME * normal_texture_dir_2 * normal_texture_speed_2;
-
+	
 	vec3 normal = mix(
 		texture(normal_texture_1, world_pos.xz + time_1).rgb,
 		texture(normal_texture_2, world_pos.xz + time_2).rgb,
 		0.5);
 
-	float basic_fresnel = fresnel(7, NORMAL, VIEW);
+	float basic_fresnel = fresnel(16, NORMAL, VIEW);
 	vec3 surface_color = mix(albedo, albedo_fresnel, basic_fresnel);
 	vec3 final_color = mix(albedo_foam, surface_color,
-		normalize(vec2(distance(height, 1.1), 1.0)).x);
+		normalize(vec2(distance(height, 1.3), 1.4)).x);
 
 	ALBEDO = final_color;
 	METALLIC = metallic;
