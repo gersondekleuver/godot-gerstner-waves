@@ -23,4 +23,9 @@ Currently the repository includes the following shaders.
 
 ### WIP Realistic waves - JONSWAP
 
+* A realistic wave model based on the infamous works of Tessendorf and the observed JONSWAP spectrum data.
+* Highly customizable, retained the original parameters of the JONSWAP spectrum to give enhanced customizability compared to other implimentations.
+* Easy to personalize with modular components.
+* This shader is a complex godot implimnetation partly inspired on the code works of [Jump trajectory](https://github.com/gasgiant/FFT-Ocean) ([video](https://www.youtube.com/watch?v=kGEqaX4Y4bQ))
+
 ### WIP Realistic waves - fluid dynamics
