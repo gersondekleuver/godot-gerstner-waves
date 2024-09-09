@@ -10,7 +10,7 @@ Currently the repository includes the following shaders.
 
 ### Stylized waves - Gerstner waves
 
-<img src="https://github.com/user-attachments/assets/049ffac4-ce0c-4cbe-a574-7823a6304130" width="400" height="300" /> <img src="https://github.com/user-attachments/assets/d091bd8a-e8db-4e47-9bce-35ad31dd36cb" width="400" height="300" />
+<img src="https://github.com/user-attachments/assets/049ffac4-ce0c-4cbe-a574-7823a6304130" width="400" height="300" /> <img src="https://github.com/user-attachments/assets/c911e934-b794-4a87-8296-1935723527c8" width="400" height="300" />
 
 
 * A very stylized ocean shader, unoptimized, directly implimented in a gdvisual shader file.
