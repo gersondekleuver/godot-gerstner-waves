@@ -18,7 +18,7 @@ It uses Gerstner waves in combination with noise textures to create a wave-like 
 * A very stylized ocean shader, directly implimented in a gdvisual shader file.
 * Simplistic code easy to understand.
 * Limited customizability.
-* Visible tiling (#TODO 1)
+* Visible tiling - WIP.
 * Normals not accurate.
 
 ---------- 
