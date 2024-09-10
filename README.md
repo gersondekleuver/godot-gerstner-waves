@@ -12,12 +12,17 @@ Currently the repository includes the following shaders.
 
 <img src="https://github.com/user-attachments/assets/049ffac4-ce0c-4cbe-a574-7823a6304130" width="400" height="300" /> <img src="https://github.com/user-attachments/assets/c911e934-b794-4a87-8296-1935723527c8" width="400" height="300" />
 
+This shader is a simple godot implimentation of the Gerstner waves from the great [catlikecoding](https://catlikecoding.com/unity/tutorials/flow/waves/).
+It uses Gerstner waves in combination with noise textures to create a wave-like effect. 
 
-* A very stylized ocean shader, unoptimized, directly implimented in a gdvisual shader file.
-* Allows for stacking a few waves which allow for height calculation in real-time (computationally ineffective).
-* Uses 3 noise textures to generate 2 water textures and 1 height texture which can be turned off to get smooth stylized waves.
-* Parameters allow for alternation in wave smoothness, speed, height, and other aspects.
-* This shader is a simple godot implimentation of the Gerstner waves from the great [catlikecoding](https://catlikecoding.com/unity/tutorials/flow/waves/).
+PRO's
+* A very stylized ocean shader, directly implimented in a gdvisual shader file.
+* Simplistic code easy to understand.
+
+CON's
+* Limited customizability.
+* Visible tiling (#TODO 1)
+* Normals not accurate.
 
 #### TODO
 * Precalculate the gerstner waves to significantly increase performance and store the output in a texture to go from real-time calculations to one-time (plus update calculation).
