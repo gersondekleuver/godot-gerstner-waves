@@ -31,22 +31,20 @@ uniform vec4 wave_3 = vec4(1,3,0.15,15);
 uniform vec4 wave_4 = vec4(2,1,0.1,20);
 uniform vec4 wave_5 = vec4(3,1,0.1,30);
 
-// Misc
-uniform float pi = 3.14159;
-
 // Persitent variables
 varying float height;
 varying vec3 world_pos;
 
-float get_noise_height(vec2 pos, float y){
-	float wave = texture(height_map, pos / height_noise_smoothness + height_noise_speed * TIME).r;
+
+vec3 get_noise_height(sampler2D map,vec2 pos, float y){
+	vec3 wave = texture(map, pos / height_noise_smoothness + height_noise_speed * TIME).rgb;
 	return max(wave * height_noise_amplitude * y, wave / 3.0);
 }
 
 vec3 gerstner_wave(vec4 wave,vec3 pos, inout vec3 tangent, inout vec3 binormal){
 	float wave_length = wave.w;
 	float s = wave.z;
-	float k = 2.0 * pi / wave_length;
+	float k = 2.0 * PI / wave_length;
 	vec2 d = normalize(wave.xy);
 	float f = k * (dot(d,pos.xz) - sqrt(9.8 / k) * TIME);
 	float a = s / k;
@@ -82,21 +80,24 @@ void vertex() {
 		+ gerstner_wave(wave_4, world_pos, tangent, binormal)
 		+ gerstner_wave(wave_5, world_pos, tangent, binormal);
 
-	VERTEX.y = p.x + get_noise_height(world_pos.xz, p.x);
+	
+	VERTEX.y = p.x + get_noise_height(height_map, world_pos.xz, p.x).r;
 	VERTEX.x += p.y; 
 	VERTEX.z += p.z;
 	
 	// store height in presistent variable.
 	height = VERTEX.y;
 	
+	// TODO - Settle on best approach for normals
+	
 	// Adding central difference for recalculating noise normals.
-	vec2 e = vec2(0.1, 0.0);
+	vec2 e = vec2(0.02, 0.0);
 	NORMAL = normalize(vec3(
-		get_noise_height(world_pos.xz - e , height)
-		- get_noise_height(world_pos.xz + e , height),
+		get_noise_height(height_map, world_pos.xz - e , height).r
+		- get_noise_height(height_map, world_pos.xz + e , height).r,
 		2.0 * e.x,
-		get_noise_height(world_pos.xz - e.yx , height)
-		- get_noise_height(world_pos.xz + e.yx , height)
+		get_noise_height(height_map, world_pos.xz - e.yx , height).r
+		- get_noise_height(height_map, world_pos.xz + e.yx , height).r
 		));
 		
 	// Used to calculate normals for gerstner waves 
@@ -121,10 +122,13 @@ void fragment() {
 		texture(normal_texture_2, world_pos.xz + time_2).rgb,
 		0.5);
 
-	float basic_fresnel = fresnel(16, NORMAL, VIEW);
+
+	float basic_fresnel = fresnel(7, NORMAL, VIEW);
 	vec3 surface_color = mix(albedo, albedo_fresnel, basic_fresnel);
-	vec3 final_color = mix(albedo_foam, surface_color,
-		normalize(vec2(distance(height, 1.3), 1.4)).x);
+	vec3 final_color = mix(
+		albedo_foam, surface_color,
+		normalize(vec2(distance(height, 2.1), 1.5)).x
+	);
 
 	ALBEDO = final_color;
 	METALLIC = metallic;

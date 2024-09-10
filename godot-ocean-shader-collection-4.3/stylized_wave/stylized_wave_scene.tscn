@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://bbbetw7otxcbu"]
 
 [ext_resource type="Shader" path="res://stylized_wave/visual_shaders/unoptimized_gerstner_wave.gdshader" id="1_tsmva"]
-[ext_resource type="Shader" path="res://stylized_wave/visual_shaders/sky.gdshader" id="2_g7crs"]
+[ext_resource type="Shader" path="res://stylized_wave/visual_shaders/sky.gdshader" id="2_66ck1"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_h12fj"]
 noise_type = 3
@@ -38,9 +38,9 @@ noise = SubResource("FastNoiseLite_fb6t0")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qpsmv"]
 render_priority = 0
 shader = ExtResource("1_tsmva")
-shader_parameter/albedo = Color(0.20871, 0.246509, 0.809763, 1)
+shader_parameter/albedo = Color(0.19855, 0.233522, 0.780771, 1)
 shader_parameter/albedo_fresnel = Color(1, 1, 1, 1)
-shader_parameter/albedo_foam = Color(1, 0.78116, 0.992192, 1)
+shader_parameter/albedo_foam = Color(1, 1, 1, 1)
 shader_parameter/roughness = 0.0
 shader_parameter/metallic = 0.2
 shader_parameter/normal_texture_speed_1 = 0.3
@@ -48,46 +48,37 @@ shader_parameter/normal_texture_speed_2 = 0.3
 shader_parameter/normal_texture_dir_1 = Vector2(0, 2)
 shader_parameter/normal_texture_dir_2 = Vector2(0.2, 0.2)
 shader_parameter/height_noise_amplitude = 0.7
-shader_parameter/height_noise_smoothness = 30.0
+shader_parameter/height_noise_smoothness = 25.0
 shader_parameter/height_noise_speed = 0.01
 shader_parameter/wave_1 = Vector4(1, 1, 0.2, 5)
 shader_parameter/wave_2 = Vector4(2, 1, 0.2, 3)
 shader_parameter/wave_3 = Vector4(1, 2, 0.15, 7)
 shader_parameter/wave_4 = Vector4(2, 1, 0.1, 12)
 shader_parameter/wave_5 = Vector4(3, 1, 0.1, 30)
-shader_parameter/pi = 3.14159
 shader_parameter/normal_texture_1 = SubResource("NoiseTexture2D_0mly1")
 shader_parameter/normal_texture_2 = SubResource("NoiseTexture2D_fdm30")
 shader_parameter/height_map = SubResource("NoiseTexture2D_yldqg")
 
 [sub_resource type="QuadMesh" id="QuadMesh_ialnf"]
 size = Vector2(20, 20)
-subdivide_width = 1000
-subdivide_depth = 1000
+subdivide_width = 500
+subdivide_depth = 500
 orientation = 1
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bsy87"]
-shader = ExtResource("2_g7crs")
-shader_parameter/sky_color = Color(0.832319, 0.730979, 1, 1)
-shader_parameter/horizion_color = Color(0.197736, 0.26787, 0.301854, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_po4gd"]
+shader = ExtResource("2_66ck1")
+shader_parameter/sky_color = Color(1, 1, 1, 1)
+shader_parameter/horizion_color = Color(0.241156, 0.241156, 0.241156, 1)
 
-[sub_resource type="Sky" id="Sky_8ycf7"]
-sky_material = SubResource("ShaderMaterial_bsy87")
-radiance_size = 4
+[sub_resource type="Sky" id="Sky_o2kl1"]
+sky_material = SubResource("ShaderMaterial_po4gd")
 
-[sub_resource type="Environment" id="Environment_b7loj"]
+[sub_resource type="Environment" id="Environment_5lfyo"]
 background_mode = 2
-sky = SubResource("Sky_8ycf7")
+sky = SubResource("Sky_o2kl1")
 ambient_light_source = 3
 ambient_light_color = Color(1, 1, 1, 1)
 reflected_light_source = 2
-ssr_max_steps = 512
-sdfgi_bounce_feedback = 0.85
-sdfgi_min_cell_size = 15.0578
-sdfgi_cascade0_distance = 963.7
-sdfgi_max_distance = 15419.2
-sdfgi_y_scale = 2
-volumetric_fog_emission = Color(0, 0, 0.792157, 1)
 
 [node name="Root3D" type="Node3D"]
 
@@ -95,15 +86,16 @@ volumetric_fog_emission = Color(0, 0, 0.792157, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0104599, 0.384985, -0.237265)
 material_override = SubResource("ShaderMaterial_qpsmv")
 mesh = SubResource("QuadMesh_ialnf")
+metadata/_edit_group_ = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.707107, 0.183013, -0.683013, 0, 0.965926, 0.258819, 0.707107, 0.183013, -0.683013, -12.5869, 8.288, -13.8257)
+transform = Transform3D(0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433013, 0.75, 2.06251, 2.71329, -0.139013)
 shadow_enabled = true
-shadow_blur = 2.894
+shadow_blur = 2.588
 directional_shadow_blend_splits = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.526956, -0.310106, 0.791298, 0, 0.931056, 0.364877, -0.849893, 0.192274, -0.490625, 13.4353, 3.68871, -5.58331)
+transform = Transform3D(-0.985996, -0.0338186, 0.163304, 0, 0.979223, 0.202787, -0.166769, 0.199947, -0.96551, 12.674, 14.7635, -42.6225)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_b7loj")
+environment = SubResource("Environment_5lfyo")

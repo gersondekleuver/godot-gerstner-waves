@@ -17,4 +17,4 @@ config/icon="res://icon.svg"
 
 [editor]
 
-movie_writer/movie_file="C:/Users/kleuv/Documents/godot_games/godot-ocean-shader-collection-4.3/recording.avi"
+movie_writer/movie_file="C:/Users/kleuv/Documents/godot_games/godot_ocean_shaders/godot-ocean-shader-collection-4.3/recording.avi"
