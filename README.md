@@ -25,6 +25,8 @@ It uses Gerstner waves in combination with noise textures to create a wave-like 
 * Precalculate the gerstner waves to significantly increase performance and store the output in a texture to go from real-time calculations to one-time (plus update calculation).
 * Add readback for buoyancy.
 
+---------- 
+
 ### WIP Realistic waves - JONSWAP
 
 * A realistic wave model based on the infamous works of Tessendorf and the observed JONSWAP spectrum data.
