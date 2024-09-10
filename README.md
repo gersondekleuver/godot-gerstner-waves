@@ -21,10 +21,6 @@ It uses Gerstner waves in combination with noise textures to create a wave-like 
 * Visible tiling (#TODO 1)
 * Normals not accurate.
 
-#### TODO
-* Precalculate the gerstner waves to significantly increase performance and store the output in a texture to go from real-time calculations to one-time (plus update calculation).
-* Add readback for buoyancy.
-
 ---------- 
 
 ### WIP Realistic waves - JONSWAP
