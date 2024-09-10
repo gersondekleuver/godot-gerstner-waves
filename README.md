@@ -15,11 +15,8 @@ Currently the repository includes the following shaders.
 This shader is a simple godot implimentation of the Gerstner waves from the great [catlikecoding](https://catlikecoding.com/unity/tutorials/flow/waves/).
 It uses Gerstner waves in combination with noise textures to create a wave-like effect. 
 
-PRO's
 * A very stylized ocean shader, directly implimented in a gdvisual shader file.
 * Simplistic code easy to understand.
-
-CON's
 * Limited customizability.
 * Visible tiling (#TODO 1)
 * Normals not accurate.
