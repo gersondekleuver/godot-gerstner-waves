@@ -5,8 +5,10 @@
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_h12fj"]
 noise_type = 3
-frequency = 0.0203
+frequency = 0.0105
 fractal_type = 2
+fractal_gain = 0.67
+fractal_weighted_strength = 0.65
 fractal_ping_pong_strength = 2.985
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_yldqg"]
@@ -43,13 +45,16 @@ shader_parameter/albedo_fresnel = Color(1, 1, 1, 1)
 shader_parameter/albedo_foam = Color(1, 1, 1, 1)
 shader_parameter/roughness = 0.0
 shader_parameter/metallic = 0.2
+shader_parameter/fresnel_effect = 5.0
+shader_parameter/foam_settings = Vector2(2.5, 1.5)
 shader_parameter/normal_texture_speed_1 = 0.3
 shader_parameter/normal_texture_speed_2 = 0.3
 shader_parameter/normal_texture_dir_1 = Vector2(0, 2)
 shader_parameter/normal_texture_dir_2 = Vector2(0.2, 0.2)
-shader_parameter/height_noise_amplitude = 0.7
+shader_parameter/height_noise_amplitude = 5.0
 shader_parameter/height_noise_smoothness = 25.0
-shader_parameter/height_noise_speed = 0.01
+shader_parameter/height_noise_speed = 0.025
+shader_parameter/central_noise_e = 0.025
 shader_parameter/wave_1 = Vector4(1, 1, 0.2, 5)
 shader_parameter/wave_2 = Vector4(2, 1, 0.2, 3)
 shader_parameter/wave_3 = Vector4(1, 2, 0.15, 7)

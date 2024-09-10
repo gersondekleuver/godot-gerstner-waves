@@ -8,6 +8,8 @@ uniform vec3 albedo_foam : source_color;
 // Extra properties
 uniform float roughness : hint_range(0.0, 1.0) = 0;
 uniform float metallic : hint_range(0.0, 1.0) = 0.2;
+uniform float fresnel_effect : hint_range(3.0, 20, 0.5) = 5;
+uniform vec2 foam_settings = vec2(3.0,2.0);
 
 // normal texture variables
 uniform sampler2D normal_texture_1;
@@ -19,9 +21,10 @@ uniform vec2 normal_texture_dir_2 = vec2(0.2, 0.2);
 
 // Height noise variable
 uniform sampler2D height_map;
-uniform float height_noise_amplitude : hint_range(0.0, 10.0, 0.1) = 0.7;
-uniform float height_noise_smoothness : hint_range(0.0, 300.0, 1.0) = 15.0;
+uniform float height_noise_amplitude : hint_range(1.0, 10.0, 0.1) = 5.0;
+uniform float height_noise_smoothness : hint_range(0.0, 300.0, 1.0) = 25.0;
 uniform float height_noise_speed : hint_range(0.0, 0.25, 0.005) = 0.025;
+uniform float central_noise_e : hint_range(0.001, 1.0, 0.005) = 0.025;
 
 // Wave variables
 // float vec4 ( dir x, dir y, smoothness, wavelength )
@@ -38,7 +41,7 @@ varying vec3 world_pos;
 
 vec3 get_noise_height(sampler2D map,vec2 pos, float y){
 	vec3 wave = texture(map, pos / height_noise_smoothness + height_noise_speed * TIME).rgb;
-	return max(wave * height_noise_amplitude * y, wave / 3.0);
+	return max(wave * height_noise_amplitude / 10.0 + y, wave / 5.0 + y);
 }
 
 vec3 gerstner_wave(vec4 wave,vec3 pos, inout vec3 tangent, inout vec3 binormal){
@@ -91,7 +94,7 @@ void vertex() {
 	// TODO - Settle on best approach for normals
 	
 	// Adding central difference for recalculating noise normals.
-	vec2 e = vec2(0.02, 0.0);
+	vec2 e = vec2(central_noise_e, 0.0);
 	NORMAL = normalize(vec3(
 		get_noise_height(height_map, world_pos.xz - e , height).r
 		- get_noise_height(height_map, world_pos.xz + e , height).r,
@@ -123,11 +126,11 @@ void fragment() {
 		0.5);
 
 
-	float basic_fresnel = fresnel(7, NORMAL, VIEW);
+	float basic_fresnel = fresnel(fresnel_effect, NORMAL, VIEW);
 	vec3 surface_color = mix(albedo, albedo_fresnel, basic_fresnel);
 	vec3 final_color = mix(
 		albedo_foam, surface_color,
-		normalize(vec2(distance(height, 2.1), 1.5)).x
+		normalize(vec2(distance(height, foam_settings.x), foam_settings.y)).x
 	);
 
 	ALBEDO = final_color;
