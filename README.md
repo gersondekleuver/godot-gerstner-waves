@@ -19,7 +19,6 @@ It uses Gerstner waves in combination with noise textures to create a wave-like 
 * Simplistic code easy to understand.
 * Limited customizability.
 * Visible tiling - WIP.
-* Normals not accurate.
 
 ---------- 
 
