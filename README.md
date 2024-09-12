@@ -8,7 +8,7 @@ Currently the repository includes the following shaders.
 
 ## Shaders
 
-### Stylized waves - Gerstner waves
+### Stylized ocean - Gerstner waves
 
 <img src="https://github.com/user-attachments/assets/049ffac4-ce0c-4cbe-a574-7823a6304130" width="400" height="300" /> <img src="https://github.com/user-attachments/assets/c9ca243a-460e-46c0-8e02-7773abad8f21" width="400" height="300" />
 
