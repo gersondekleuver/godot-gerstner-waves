@@ -4,7 +4,7 @@ This repository is a collection of ocean shaders for the [godot 4.3 game engine]
 
 Currently the repository includes the following shaders.
 
-[Stylized waves - Gerstner waves](https://github.com/gersondekleuver/godot_ocean_shaders/tree/main/godot-ocean-shader-collection-4.3/stylized_wave)
+[Stylized waves - Gerstner waves](https://github.com/gersondekleuver/godot-ocean-shaders/tree/main/godot-ocean-shader-collection-4.3/stylized_ocean)
 
 ## Shaders
 
