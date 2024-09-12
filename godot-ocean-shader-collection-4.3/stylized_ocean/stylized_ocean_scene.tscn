@@ -54,7 +54,7 @@ shader_parameter/normal_texture_dir_2 = Vector2(0.2, 0.2)
 shader_parameter/height_noise_amplitude = 5.0
 shader_parameter/height_noise_smoothness = 25.0
 shader_parameter/height_noise_speed = 0.025
-shader_parameter/central_noise_e = 0.025
+shader_parameter/central_noise_e = 0.001
 shader_parameter/wave_1 = Vector4(1, 1, 0.2, 5)
 shader_parameter/wave_2 = Vector4(2, 1, 0.2, 3)
 shader_parameter/wave_3 = Vector4(1, 2, 0.15, 7)
@@ -88,19 +88,17 @@ reflected_light_source = 2
 [node name="Root3D" type="Node3D"]
 
 [node name="GersnterWaves" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0104599, 0.384985, -0.237265)
 material_override = SubResource("ShaderMaterial_qpsmv")
 mesh = SubResource("QuadMesh_ialnf")
 metadata/_edit_group_ = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433013, 0.75, 2.06251, 2.71329, -0.139013)
+transform = Transform3D(-1, 2.26267e-08, -8.44439e-08, 0, 0.965926, 0.258819, 8.74228e-08, 0.258819, -0.965926, 0, 5.69198, 0)
 shadow_enabled = true
-shadow_blur = 2.588
 directional_shadow_blend_splits = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.985996, -0.0338186, 0.163304, 0, 0.979223, 0.202787, -0.166769, 0.199947, -0.96551, 12.674, 14.7635, -42.6225)
+transform = Transform3D(1, 0, 0, 0, 0.777146, 0.62932, 0, -0.62932, 0.777146, 0, 8.87365, 15.873)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_5lfyo")

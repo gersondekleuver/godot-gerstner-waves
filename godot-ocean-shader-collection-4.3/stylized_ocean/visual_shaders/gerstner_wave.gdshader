@@ -95,6 +95,7 @@ void vertex() {
 	
 	// Adding central difference for recalculating noise normals.
 	vec2 e = vec2(central_noise_e, 0.0);
+	
 	NORMAL = normalize(vec3(
 		get_noise_height(height_map, world_pos.xz - e , height).r
 		- get_noise_height(height_map, world_pos.xz + e , height).r,
