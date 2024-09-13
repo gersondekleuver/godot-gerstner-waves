@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://bbbetw7otxcbu"]
 
-[ext_resource type="Shader" path="res://stylized_wave/visual_shaders/unoptimized_gerstner_wave.gdshader" id="1_tsmva"]
-[ext_resource type="Shader" path="res://stylized_wave/visual_shaders/sky.gdshader" id="2_66ck1"]
+[ext_resource type="Shader" path="res://stylized_ocean/visual_shaders/gerstner_wave.gdshader" id="1_tsmva"]
+[ext_resource type="Shader" path="res://stylized_ocean/visual_shaders/sky.gdshader" id="2_66ck1"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_h12fj"]
 noise_type = 3
