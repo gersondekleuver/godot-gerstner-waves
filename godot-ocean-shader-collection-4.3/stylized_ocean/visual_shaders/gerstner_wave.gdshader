@@ -3,16 +3,18 @@ shader_type spatial;
 // Basic properties
 uniform vec3 albedo : source_color;
 uniform vec3 albedo_fresnel : source_color;
-uniform vec3 height_based_albedo : source_color;
 
 // Extra properties
 uniform float roughness : hint_range(0.0, 1.0) = 0;
 uniform float metallic : hint_range(0.0, 1.0) = 0.2;
 uniform float fresnel_effect : hint_range(3.0, 20, 0.5) = 5;
+
+// Height based albedo
 uniform bool height_based_color = true;
+uniform vec3 height_based_albedo : source_color;
 uniform vec2 height_based_color_settings = vec2(3.0,2.0);
 
-// normal texture variables
+// Normal texture variables
 uniform sampler2D normal_texture_1;
 uniform sampler2D normal_texture_2;
 uniform float normal_texture_speed_1 : hint_range(0.0, 2.0, 0.1) = 0.3;
