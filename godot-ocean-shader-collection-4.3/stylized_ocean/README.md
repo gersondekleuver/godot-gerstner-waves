@@ -12,9 +12,8 @@ It uses Gerstner waves in combination with noise textures to create a wave-like 
 * Limited customizability.
 
 ### WIP
-* Terrain intersection
-* Foam texture
-
+* Terrain intersection.
+* Foam - Foam textures.
 
 This directory includes the following files:
 
