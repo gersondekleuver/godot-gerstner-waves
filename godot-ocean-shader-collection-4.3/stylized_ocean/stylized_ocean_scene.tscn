@@ -3,17 +3,13 @@
 [ext_resource type="Shader" path="res://stylized_ocean/visual_shaders/gerstner_wave.gdshader" id="1_tsmva"]
 [ext_resource type="Shader" path="res://stylized_ocean/visual_shaders/sky.gdshader" id="2_66ck1"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_h12fj"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_w637a"]
 noise_type = 3
-frequency = 0.0105
+frequency = 0.0274
 fractal_type = 2
-fractal_gain = 0.67
-fractal_weighted_strength = 0.65
-fractal_ping_pong_strength = 2.985
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_yldqg"]
-seamless = true
-noise = SubResource("FastNoiseLite_h12fj")
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2c5mj"]
+noise = SubResource("FastNoiseLite_w637a")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_osw4l"]
 noise_type = 3
@@ -53,10 +49,11 @@ shader_parameter/normal_texture_speed_1 = 0.3
 shader_parameter/normal_texture_speed_2 = 0.3
 shader_parameter/normal_texture_dir_1 = Vector2(0, 2)
 shader_parameter/normal_texture_dir_2 = Vector2(0.2, 0.2)
+shader_parameter/height_noise = true
 shader_parameter/height_noise_amplitude = 5.0
 shader_parameter/height_noise_smoothness = 25.0
 shader_parameter/height_noise_speed = 0.025
-shader_parameter/central_noise_e = 0.301
+shader_parameter/central_difference_normal_e = 0.351
 shader_parameter/wave_1 = Vector4(1, 1, 0.2, 5)
 shader_parameter/wave_2 = Vector4(2, 1, 0.2, 3)
 shader_parameter/wave_3 = Vector4(1, 2, 0.15, 7)
@@ -64,7 +61,7 @@ shader_parameter/wave_4 = Vector4(2, 1, 0.1, 12)
 shader_parameter/wave_5 = Vector4(3, 1, 0.1, 30)
 shader_parameter/normal_texture_1 = SubResource("NoiseTexture2D_0mly1")
 shader_parameter/normal_texture_2 = SubResource("NoiseTexture2D_fdm30")
-shader_parameter/height_map = SubResource("NoiseTexture2D_yldqg")
+shader_parameter/height_noise_texture = SubResource("NoiseTexture2D_2c5mj")
 
 [sub_resource type="QuadMesh" id="QuadMesh_ialnf"]
 size = Vector2(20, 20)

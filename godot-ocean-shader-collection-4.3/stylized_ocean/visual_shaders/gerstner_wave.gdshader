@@ -24,11 +24,12 @@ uniform vec2 normal_texture_dir_1 = vec2(0.0, 2.0);
 uniform vec2 normal_texture_dir_2 = vec2(0.2, 0.2);
 
 // Height noise variable
-uniform sampler2D height_map;
+uniform bool height_noise = true;
+uniform sampler2D height_noise_texture;
 uniform float height_noise_amplitude : hint_range(1.0, 10.0, 0.1) = 5.0;
 uniform float height_noise_smoothness : hint_range(0.0, 300.0, 1.0) = 25.0;
 uniform float height_noise_speed : hint_range(0.0, 0.25, 0.005) = 0.025;
-uniform float central_noise_e : hint_range(0.001, 1.0, 0.005) = 0.025;
+uniform float central_difference_normal_e : hint_range(0.001, 1.0, 0.005) = 0.025;
 
 // Wave variables
 // float vec4 ( dir x, dir y, smoothness, wavelength )
@@ -55,7 +56,6 @@ vec3 gerstner_wave(vec4 wave,vec3 pos, inout vec3 tangent, inout vec3 binormal){
 	vec2 d = normalize(wave.xy);
 	float f = k * (dot(d,pos.xz) - sqrt(9.8 / k) * TIME);
 	float a = s / k;
-
 	float sin_f = sin(f);
 	float cos_f = cos(f);
 
@@ -70,9 +70,7 @@ vec3 gerstner_wave(vec4 wave,vec3 pos, inout vec3 tangent, inout vec3 binormal){
 		- d.y * d.y * (s * sin_f)
 	);
 
-	return vec3(a * sin_f,
-	d.x * (a * cos_f),
-	d.y * (a * cos_f));
+	return vec3(a * sin_f, d.x * (a * cos_f), d.y * (a * cos_f));
 }
 
 void vertex() {
@@ -80,45 +78,36 @@ void vertex() {
 
 	vec3 tangent = vec3(1, 0, 0);
 	vec3 binormal = vec3(0, 0, 1);
-	
+
 	vec3 p = gerstner_wave(wave_1, world_pos, tangent, binormal)
 		+ gerstner_wave(wave_2, world_pos, tangent, binormal)
 		+ gerstner_wave(wave_3, world_pos, tangent, binormal)
 		+ gerstner_wave(wave_4, world_pos, tangent, binormal)
 		+ gerstner_wave(wave_5, world_pos, tangent, binormal);
 
-	
-	VERTEX.y = p.x + get_noise_height(height_map, world_pos.xz, p.x).r;
+	VERTEX.y = p.x;
 	VERTEX.x += p.y; 
 	VERTEX.z += p.z;
 	
-	// store height in presistent variable.
-	height = VERTEX.y;
-	
-	// TODO - Settle on best approach for normals
-	
+	if (height_noise){
+	VERTEX.y += get_noise_height(height_noise_texture, world_pos.xz, p.x).r;
 	// Adding central difference for recalculating noise normals.
-	vec2 e = vec2(central_noise_e, 0.0);
-	
+	vec2 e = vec2(central_difference_normal_e, 0.0);
 	NORMAL = normalize(vec3(
-		get_noise_height(height_map, world_pos.xz - e , height).r
-		- get_noise_height(height_map, world_pos.xz + e , height).r,
+		get_noise_height(height_noise_texture, world_pos.xz - e , VERTEX.y).r
+		- get_noise_height(height_noise_texture, world_pos.xz + e , VERTEX.y).r,
 		2.0 * e.x,
-		get_noise_height(height_map, world_pos.xz - e.yx , height).r
-		- get_noise_height(height_map, world_pos.xz + e.yx , height).r
+		get_noise_height(height_noise_texture, world_pos.xz - e.yx , VERTEX.y).r
+		- get_noise_height(height_noise_texture, world_pos.xz + e.yx , VERTEX.y).r
 		));
-		
-	// Used to calculate normals for gerstner waves 
-	// Added this to decrease the harshness of the texture.
+	}
+	height = VERTEX.y;
 	NORMAL += normalize(cross(binormal, tangent));
-
 }
 
 float _fresnel(float f, vec3 normal, vec3 view)
 {
-	return pow((1.0 - clamp(dot(
-		normalize(normal), normalize(view)), 0.0, 1.0 )),
-	f);
+	return pow((1.0 - clamp(dot(normalize(normal), normalize(view)), 0.0, 1.0 )),f);
 }
 
 void fragment() {
@@ -132,12 +121,9 @@ void fragment() {
 		0.5);
 
 	if(fresnel){
-		final_albedo = mix(base_albedo, fresnel_albedo, 
-		_fresnel(fresnel_effect, NORMAL, VIEW)
-	);
+		final_albedo = mix(base_albedo, fresnel_albedo, _fresnel(fresnel_effect, NORMAL, VIEW));
 	}
 
-	// Simplistic heightbased color.
 	if (height_based_color){
 		final_albedo = mix(
 		height_based_albedo, final_albedo,
@@ -146,7 +132,6 @@ void fragment() {
 	}
 
 	// TBA foam based on determinant.
-
 	ALBEDO = final_albedo;
 	METALLIC = metallic;
 	ROUGHNESS = roughness;
