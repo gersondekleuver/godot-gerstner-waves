@@ -40,13 +40,14 @@ noise = SubResource("FastNoiseLite_fb6t0")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qpsmv"]
 render_priority = 0
 shader = ExtResource("1_tsmva")
-shader_parameter/albedo = Color(0.19855, 0.233522, 0.780771, 1)
-shader_parameter/albedo_fresnel = Color(1, 1, 1, 1)
-shader_parameter/height_based_albedo = Color(1, 1, 1, 1)
+shader_parameter/base_albedo = Color(0.029487, 0.266672, 1, 1)
 shader_parameter/roughness = 0.0
 shader_parameter/metallic = 0.2
+shader_parameter/fresnel = true
+shader_parameter/fresnel_albedo = Color(1, 1, 1, 1)
 shader_parameter/fresnel_effect = 5.0
 shader_parameter/height_based_color = true
+shader_parameter/height_based_albedo = Color(1, 1, 1, 1)
 shader_parameter/height_based_color_settings = Vector2(3, 2)
 shader_parameter/normal_texture_speed_1 = 0.3
 shader_parameter/normal_texture_speed_2 = 0.3

@@ -1,12 +1,13 @@
 shader_type spatial;
 
 // Basic properties
-uniform vec3 albedo : source_color;
-uniform vec3 albedo_fresnel : source_color;
-
-// Extra properties
+uniform vec3 base_albedo : source_color;
 uniform float roughness : hint_range(0.0, 1.0) = 0;
 uniform float metallic : hint_range(0.0, 1.0) = 0.2;
+
+// Fresnel 
+uniform bool fresnel = true;
+uniform vec3 fresnel_albedo : source_color;
 uniform float fresnel_effect : hint_range(3.0, 20, 0.5) = 5;
 
 // Height based albedo
@@ -113,7 +114,7 @@ void vertex() {
 
 }
 
-float fresnel(float f, vec3 normal, vec3 view)
+float _fresnel(float f, vec3 normal, vec3 view)
 {
 	return pow((1.0 - clamp(dot(
 		normalize(normal), normalize(view)), 0.0, 1.0 )),
@@ -121,6 +122,7 @@ float fresnel(float f, vec3 normal, vec3 view)
 }
 
 void fragment() {
+	vec3 final_albedo;
 	vec2 time_1 = TIME * normal_texture_dir_1 * normal_texture_speed_1;
 	vec2 time_2 = TIME * normal_texture_dir_2 * normal_texture_speed_2;
 	
@@ -129,25 +131,23 @@ void fragment() {
 		texture(normal_texture_2, world_pos.xz + time_2).rgb,
 		0.5);
 
+	if(fresnel){
+		final_albedo = mix(base_albedo, fresnel_albedo, 
+		_fresnel(fresnel_effect, NORMAL, VIEW)
+	);
+	}
 
-	float basic_fresnel = fresnel(fresnel_effect, NORMAL, VIEW);
-	vec3 surface_color = mix(albedo, albedo_fresnel, basic_fresnel);
-	vec3 final_color;
-	
 	// Simplistic heightbased color.
 	if (height_based_color){
-		final_color = mix(
-		height_based_albedo, surface_color,
+		final_albedo = mix(
+		height_based_albedo, final_albedo,
 		normalize(vec2(distance(height, height_based_color_settings.x), height_based_color_settings.y)).x
 		);
-	}
-	else {
-		final_color = surface_color;
 	}
 
 	// TBA foam based on determinant.
 
-	ALBEDO = final_color;
+	ALBEDO = final_albedo;
 	METALLIC = metallic;
 	ROUGHNESS = roughness;
 	NORMAL_MAP = normal;
