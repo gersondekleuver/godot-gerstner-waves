@@ -6,15 +6,15 @@ This shader is a simple godot implimentation of the Gerstner waves from the grea
 It uses Gerstner waves in combination with noise textures to create a wave-like effect. 
 
 * A very stylized ocean shader, directly implimented in a gdvisual shader file.
-* Uses 5 waves and a height noise texture to simulate a stylized ocean.
+* Uses 5 gerstner waves and a height noise texture to simulate a stylized ocean.
 * Simplistic code easy to understand yet unoptimized.
 * Real-time calculations are inefficient, thus this shader is not scalable.
 * Limited customizability.
+* Uses central difference to calculate normals combined with gernster normals.
 
 ### WIP
-* Terrain intersection
-* Foam texture
-
+* Terrain intersection.
+* Foam - Foam textures.
 
 This directory includes the following files:
 
