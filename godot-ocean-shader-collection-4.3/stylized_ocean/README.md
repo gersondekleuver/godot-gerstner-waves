@@ -20,4 +20,3 @@ This directory includes the following files:
 
 * Project scene, for examplary reasons.
 * Visual shaders folder, which includes a basic sky shader and the actual gersnter_shader.
-

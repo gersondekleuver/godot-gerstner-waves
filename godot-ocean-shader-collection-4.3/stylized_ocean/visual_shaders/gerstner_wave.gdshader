@@ -3,13 +3,14 @@ shader_type spatial;
 // Basic properties
 uniform vec3 albedo : source_color;
 uniform vec3 albedo_fresnel : source_color;
-uniform vec3 albedo_foam : source_color;
+uniform vec3 height_based_albedo : source_color;
 
 // Extra properties
 uniform float roughness : hint_range(0.0, 1.0) = 0;
 uniform float metallic : hint_range(0.0, 1.0) = 0.2;
 uniform float fresnel_effect : hint_range(3.0, 20, 0.5) = 5;
-uniform vec2 foam_settings = vec2(3.0,2.0);
+uniform bool height_based_color = true;
+uniform vec2 height_based_color_settings = vec2(3.0,2.0);
 
 // normal texture variables
 uniform sampler2D normal_texture_1;
@@ -129,10 +130,20 @@ void fragment() {
 
 	float basic_fresnel = fresnel(fresnel_effect, NORMAL, VIEW);
 	vec3 surface_color = mix(albedo, albedo_fresnel, basic_fresnel);
-	vec3 final_color = mix(
-		albedo_foam, surface_color,
-		normalize(vec2(distance(height, foam_settings.x), foam_settings.y)).x
-	);
+	vec3 final_color;
+	
+	// Simplistic heightbased color.
+	if (height_based_color){
+		final_color = mix(
+		height_based_albedo, surface_color,
+		normalize(vec2(distance(height, height_based_color_settings.x), height_based_color_settings.y)).x
+		);
+	}
+	else {
+		final_color = surface_color;
+	}
+
+	// TBA foam based on determinant.
 
 	ALBEDO = final_color;
 	METALLIC = metallic;
