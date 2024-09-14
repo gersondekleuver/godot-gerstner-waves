@@ -10,6 +10,7 @@ It uses Gerstner waves in combination with noise textures to create a wave-like 
 * Simplistic code easy to understand yet unoptimized.
 * Real-time calculations are inefficient, thus this shader is not scalable.
 * Limited customizability.
+* Uses central difference to calculate normals combined with gernster derivatives.
 
 ### WIP
 * Terrain intersection.
