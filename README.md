@@ -1,6 +1,6 @@
-# Godot Ocean Shaders
+# Godot Gerstner Waves
 
-This repository is a collection of ocean shaders for the [godot 4.3 game engine](https://godotengine.org/).
+This repository provides an gerstner wave implimentation for the [godot 4.3 game engine](https://godotengine.org/).
 
 ## Shaders
 
@@ -28,5 +28,3 @@ It uses Gerstner waves in combination with noise textures to create a wave-like 
 * Highly customizable, retained the original parameters of the JONSWAP spectrum to give enhanced customizability compared to other implimentations.
 * Easy to personalize with modular components.
 * This shader is a complex godot implimnetation partly inspired on the code works of [Jump trajectory](https://github.com/gasgiant/FFT-Ocean) ([video](https://www.youtube.com/watch?v=kGEqaX4Y4bQ))
-
-### WIP Realistic waves - fluid dynamics
